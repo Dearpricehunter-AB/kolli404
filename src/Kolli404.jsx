@@ -47,9 +47,9 @@ const C = {
   gold: "#C8A45D", goldSoft: "rgba(200,164,93,0.14)", goldBorder: "rgba(200,164,93,0.35)",
   goldGlow: "rgba(200,164,93,0.10)", red: "#9F4F46", redSoft: "rgba(159,79,70,0.12)",
   green: "#6F8F72", greenSoft: "rgba(111,143,114,0.12)",
-  bg: "#0E0D0B", card: "#151210", panel: "#1A1610",
-  bdr: "rgba(200,164,93,0.12)", bdrStrong: "rgba(200,164,93,0.25)",
-  txt: "#E7DED0", muted: "#B5ADA0", dim: "#968C80",
+  bg: "#0E0D0B", card: "#1A1714", panel: "#201C16",
+  bdr: "rgba(200,164,93,0.18)", bdrStrong: "rgba(200,164,93,0.35)",
+  txt: "#F0E8DC", muted: "#CCC4B6", dim: "#B0A898",
   sans: "'IBM Plex Sans','Helvetica Neue',sans-serif",
   mono: "'IBM Plex Mono','Courier New',monospace",
   serif: "'Georgia',serif",
@@ -406,7 +406,7 @@ export default function Kolli404() {
     return (
       <div style={{ background: C.card, border: `1px solid ${C.bdr}`, padding: "22px 22px", marginBottom: 12, position: "relative", transform: `rotate(${clue.id % 2 === 0 ? -0.3 : 0.2}deg)`, boxShadow: "0 4px 20px rgba(0,0,0,0.3)" }}>
         {clue.stamp && (
-          <div style={{ position: "absolute", top: 14, right: 16, fontFamily: C.mono, fontSize: 10, letterSpacing: "0.2em", color: C.red, border: `1px solid ${C.red}`, padding: "2px 10px", opacity: 0.5, transform: "rotate(3deg)" }}>{clue.stamp}</div>
+          <div style={{ position: "absolute", top: 14, right: 16, fontFamily: C.mono, fontSize: 11, letterSpacing: "0.2em", color: C.red, border: `1.5px solid ${C.red}`, padding: "3px 12px", opacity: 0.75, transform: "rotate(3deg)" }}>{clue.stamp}</div>
         )}
         <div style={{ fontFamily: C.mono, fontSize: 11, letterSpacing: "0.15em", color: C.muted, marginBottom: 16, paddingBottom: 12, borderBottom: `1px solid ${C.bdr}` }}>{clue.docTitle}</div>
         {clue.fields && renderFields(clue.fields)}
@@ -437,7 +437,7 @@ export default function Kolli404() {
               <span className="k404-border-glow" style={{ fontFamily: C.mono, fontSize: 10, letterSpacing: "0.2em", color: C.red, border: `1px solid ${C.red}`, padding: "3px 12px", display: "inline-block" }}>OLÖST</span>
             </div>
 
-            <div style={{ fontFamily: C.mono, fontSize: 9, color: C.dim, letterSpacing: "0.08em", lineHeight: 2, marginBottom: 18, borderBottom: `1px solid ${C.bdr}`, paddingBottom: 14 }}>
+            <div style={{ fontFamily: C.mono, fontSize: 10, color: C.dim, letterSpacing: "0.08em", lineHeight: 2, marginBottom: 18, borderBottom: `1px solid ${C.bdr}`, paddingBottom: 14 }}>
               <div>CASE ID: K404-2026</div>
               <div>STATUS: DELIVERED TO 3PL — NOT AVAILABLE FOR PRODUCTION</div>
               <div>VALUE AT RISK: 18 400 GBP</div>
@@ -480,7 +480,7 @@ export default function Kolli404() {
       <header style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "12px 20px", borderBottom: `1px solid ${C.bdr}`, background: C.bg, position: "sticky", top: 0, zIndex: 10 }}>
         <span style={{ fontFamily: C.mono, fontSize: 11, letterSpacing: "0.15em", color: C.gold, fontWeight: 500 }}>K404-2026</span>
         <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-          <span style={{ fontFamily: C.mono, fontSize: 9, color: C.dim, letterSpacing: "0.08em" }}>GENOMBROTT</span>
+          <span style={{ fontFamily: C.mono, fontSize: 10, color: C.dim, letterSpacing: "0.08em" }}>GENOMBROTT</span>
           {[0, 1, 2].map(i => (
             <div key={i} style={{
               width: 8, height: 8, borderRadius: "50%",
@@ -563,7 +563,7 @@ export default function Kolli404() {
             {/* Active document */}
             {ac && (
               <div className="k404-doc-enter" key={ac.id} style={{ marginBottom: 20 }}>
-                <div style={{ fontFamily: C.mono, fontSize: 9, color: C.dim, marginBottom: 6, letterSpacing: "0.1em" }}>KLICKA PÅ MARKERADE FÄLT FÖR ATT VÄLJA BEVIS</div>
+                <div style={{ fontFamily: C.mono, fontSize: 10, color: C.gold, marginBottom: 8, letterSpacing: "0.1em", opacity: 0.8 }}>KLICKA PÅ MARKERADE FÄLT FÖR ATT VÄLJA BEVIS</div>
                 {renderClue(ac)}
               </div>
             )}
@@ -583,12 +583,12 @@ export default function Kolli404() {
           <div className="k404-doc-enter" style={{ paddingBottom: 40 }}>
             {/* Profile */}
             <div style={{ background: C.card, border: `1px solid ${C.goldBorder}`, padding: "28px 22px", textAlign: "center", marginBottom: 34 }}>
-              <div style={{ fontFamily: C.mono, fontSize: 9, color: C.dim, letterSpacing: "0.15em", marginBottom: 16 }}>Genombrott: {btCount} av 3</div>
+              <div style={{ fontFamily: C.mono, fontSize: 10, color: C.dim, letterSpacing: "0.15em", marginBottom: 16 }}>Genombrott: {btCount} av 3</div>
               <h2 style={{ fontFamily: C.mono, fontSize: 18, color: C.gold, fontWeight: 600, marginBottom: 14, letterSpacing: "0.1em" }}>{profile.title}</h2>
               <p style={{ fontFamily: C.sans, fontSize: 12, lineHeight: 1.8, color: C.muted, maxWidth: 400, margin: "0 auto", whiteSpace: "pre-line" }}>{profile.text}</p>
               <div style={{ marginTop: 18 }}>
                 <button onClick={copyResult} style={{
-                  fontFamily: C.mono, fontSize: 9, letterSpacing: "0.15em", color: copied ? C.green : C.gold,
+                  fontFamily: C.mono, fontSize: 10, letterSpacing: "0.15em", color: copied ? C.green : C.gold,
                   background: "transparent", border: `1px solid ${copied ? C.green : C.goldBorder}`, padding: "8px 18px", cursor: "pointer", transition: "all 0.2s",
                 }}>{copied ? "KOPIERAT" : "KOPIERA RESULTAT"}</button>
               </div>
@@ -601,7 +601,7 @@ export default function Kolli404() {
 
             {/* Case closure */}
             <div style={{ marginBottom: 34 }}>
-              <div style={{ fontFamily: C.mono, fontSize: 9, letterSpacing: "0.2em", color: C.dim, marginBottom: 6 }}>CASE CLOSURE</div>
+              <div style={{ fontFamily: C.mono, fontSize: 10, letterSpacing: "0.2em", color: C.dim, marginBottom: 6 }}>CASE CLOSURE</div>
               <h2 style={{ fontFamily: C.mono, fontSize: 14, letterSpacing: "0.1em", color: C.txt, marginBottom: 26, paddingBottom: 14, borderBottom: `1px solid ${C.bdr}`, fontWeight: 500 }}>KOLLI 404</h2>
               {[
                 { num: "01", title: "UTGÅNGSLÄGE", text: "Godset var aldrig fysiskt försvunnet.\n\nImportdeklarationen hade status Frigjord. Transportören hade levererat till 3PL. 3PL hade tagit emot kollit i WMS.\n\nMen materialet var inte operativt tillgängligt för produktionen.\n\nFelet låg inte i en enskild status, utan i antagandet att statusarna betydde samma sak." },
@@ -610,7 +610,7 @@ export default function Kolli404() {
                 { num: "04", title: "PRIORITETSGLAPPET", text: "När ärendet till slut kopplades till rätt PO skapades outbound-ordern som standard replenishment med normal prioritet.\n\nTidsfönstret — produktionskritiskt före 14:00 — var redan passerat vid 14:32.\n\nÄven om ordern hade flaggats som urgent vid den tidpunkten hade materialet inte nått produktionslinan i tid." },
               ].map((s, i) => (
                 <div key={i} style={{ marginBottom: 22 }}>
-                  <div style={{ fontFamily: C.mono, fontSize: 9, color: C.gold, letterSpacing: "0.1em", marginBottom: 6 }}>{s.num} — {s.title}</div>
+                  <div style={{ fontFamily: C.mono, fontSize: 10, color: C.gold, letterSpacing: "0.1em", marginBottom: 6 }}>{s.num} — {s.title}</div>
                   <p style={{ fontFamily: C.sans, fontSize: 12, lineHeight: 1.8, color: C.muted, whiteSpace: "pre-line" }}>{s.text}</p>
                 </div>
               ))}
@@ -618,27 +618,27 @@ export default function Kolli404() {
 
             {/* Cost */}
             <div style={{ background: C.card, border: `1px solid ${C.bdr}`, padding: "20px 18px", marginBottom: 34 }}>
-              <div style={{ fontFamily: C.mono, fontSize: 9, letterSpacing: "0.15em", color: C.dim, marginBottom: 6 }}>05 — KOSTNADSEFFEKT</div>
-              <div style={{ fontFamily: C.mono, fontSize: 9, letterSpacing: "0.1em", color: C.muted, marginBottom: 14 }}>DEN SYNLIGA KOSTNADEN</div>
+              <div style={{ fontFamily: C.mono, fontSize: 10, letterSpacing: "0.15em", color: C.dim, marginBottom: 6 }}>05 — KOSTNADSEFFEKT</div>
+              <div style={{ fontFamily: C.mono, fontSize: 10, letterSpacing: "0.1em", color: C.muted, marginBottom: 14 }}>DEN SYNLIGA KOSTNADEN</div>
               {COSTS_VISIBLE.map((c, i) => (
                 <div key={i} style={{ display: "flex", justifyContent: "space-between", fontFamily: C.mono, fontSize: 11, color: c.bold ? C.gold : C.txt, padding: "5px 0", borderBottom: c.bold ? "none" : `1px solid ${C.bdr}`, fontWeight: c.bold ? 600 : 400, ...(c.bold ? { borderTop: `1px solid ${C.bdr}`, marginTop: 6, paddingTop: 10 } : {}) }}>
                   <span>{c.l}</span><span>{c.v}</span>
                 </div>
               ))}
-              <div style={{ fontFamily: C.mono, fontSize: 9, letterSpacing: "0.1em", color: C.muted, marginTop: 26, marginBottom: 10 }}>DEN DOLDA KOSTNADEN</div>
+              <div style={{ fontFamily: C.mono, fontSize: 10, letterSpacing: "0.1em", color: C.muted, marginTop: 26, marginBottom: 10 }}>DEN DOLDA KOSTNADEN</div>
               {COSTS_HIDDEN.map((c, i) => <p key={i} style={{ fontFamily: C.sans, fontSize: 12, color: C.dim, fontStyle: "italic", marginBottom: 3 }}>{c}</p>)}
             </div>
 
             {/* DPH */}
             <div style={{ textAlign: "center", padding: "28px 0 16px" }}>
-              <div style={{ fontFamily: C.mono, fontSize: 9, letterSpacing: "0.15em", color: C.dim, marginBottom: 18 }}>06 — NOTERING</div>
+              <div style={{ fontFamily: C.mono, fontSize: 10, letterSpacing: "0.15em", color: C.dim, marginBottom: 18 }}>06 — NOTERING</div>
               <p style={{ fontFamily: C.sans, fontSize: 13, color: C.muted, marginBottom: 4 }}>Det här var ett fiktivt fall.</p>
               <p style={{ fontFamily: C.sans, fontSize: 13, color: C.muted, marginBottom: 16 }}>Men mönstret är verkligt.</p>
               <p style={{ fontFamily: C.serif, fontSize: 14, fontStyle: "italic", color: C.txt, marginBottom: 4, lineHeight: 1.6 }}>Alla hade rätt i sitt system.</p>
               <p style={{ fontFamily: C.serif, fontSize: 14, fontStyle: "italic", color: C.txt, marginBottom: 24, lineHeight: 1.6 }}>Ingen hade hela bilden.</p>
               <div style={{ height: 1, background: C.bdr, maxWidth: 60, margin: "0 auto 18px" }} />
               <p style={{ fontFamily: C.mono, fontSize: 12, letterSpacing: "0.2em", color: C.gold, fontWeight: 500, marginBottom: 4 }}>DearPriceHunter</p>
-              <p style={{ fontFamily: C.mono, fontSize: 9, color: C.dim, letterSpacing: "0.1em" }}>Beslutsstöd för kostnad, risk och logistikdata.</p>
+              <p style={{ fontFamily: C.mono, fontSize: 10, color: C.dim, letterSpacing: "0.1em" }}>Beslutsstöd för kostnad, risk och logistikdata.</p>
             </div>
           </div>
         )}
@@ -659,14 +659,14 @@ export default function Kolli404() {
               padding: "14px 18px", transition: "all 0.3s",
               boxShadow: selectedEvidence.length === 2 ? `0 0 20px ${C.goldGlow}` : "0 4px 20px rgba(0,0,0,0.4)",
             }}>
-              <div style={{ fontFamily: C.mono, fontSize: 9, letterSpacing: "0.15em", color: C.dim, marginBottom: 10 }}>VALDA BEVIS</div>
+              <div style={{ fontFamily: C.mono, fontSize: 10, letterSpacing: "0.15em", color: C.gold, marginBottom: 10 }}>VALDA BEVIS</div>
               <div style={{ display: "flex", gap: 8, marginBottom: 10, minHeight: 32, alignItems: "center" }}>
                 {[0, 1].map(i => (
                   <div key={i} style={{
-                    flex: 1, fontFamily: C.mono, fontSize: 10, padding: "8px 10px",
-                    border: `1px dashed ${selectedEvidence[i] ? C.gold : C.bdr}`,
-                    color: selectedEvidence[i] ? C.gold : C.dim,
-                    background: selectedEvidence[i] ? C.goldSoft : "transparent",
+                    flex: 1, fontFamily: C.mono, fontSize: 11, padding: "8px 10px",
+                    border: `1px dashed ${selectedEvidence[i] ? C.gold : "rgba(200,164,93,0.3)"}`,
+                    color: selectedEvidence[i] ? C.gold : C.muted,
+                    background: selectedEvidence[i] ? C.goldSoft : "rgba(200,164,93,0.04)",
                     transition: "all 0.25s", letterSpacing: "0.03em",
                     cursor: selectedEvidence[i] ? "pointer" : "default",
                   }}
@@ -692,7 +692,7 @@ export default function Kolli404() {
                     ? { background: C.goldSoft, color: C.gold, border: `1px solid ${C.goldBorder}` }
                     : selectedEvidence.length === 2
                     ? { background: C.goldSoft, color: C.gold, border: `1px solid ${C.goldBorder}` }
-                    : { background: "transparent", color: C.dim, border: `1px solid ${C.bdr}`, opacity: 0.5 }),
+                    : { background: "rgba(200,164,93,0.04)", color: C.muted, border: `1px solid rgba(200,164,93,0.2)`, opacity: 0.7 }),
                 }}
               >
                 {connectResult === "success" ? "✓ GENOMBROTT HITTAT"
