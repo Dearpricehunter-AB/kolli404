@@ -451,7 +451,7 @@ export default function Kolli404() {
           <p className="k404-card-enter" style={{ fontFamily: C.mono, fontSize: 11, color: C.dim, letterSpacing: "0.12em", marginBottom: 28 }}>FRIGJORD DEKLARATION, SAKNAT MATERIAL</p>
 
           <div className="k404-doc-enter" style={{ marginBottom: 28, position: "relative", overflow: "hidden", border: `1px solid ${C.bdr}`, aspectRatio: "16 / 9", background: C.card }}>
-            <img src="/hero-intro.webp" alt="" loading="eager" decoding="async" style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
+            <img src="/public/hero-intro.webp" alt="" loading="eager" decoding="async" style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
           </div>
 
           <div className="k404-doc-enter" style={{ background: C.card, border: `1px solid ${C.bdr}`, padding: "32px 28px", marginBottom: 36 }}>
@@ -521,7 +521,7 @@ export default function Kolli404() {
           <>
             {/* Evidence overview image */}
             <div className="k404-fade" style={{ marginBottom: 22, overflow: "hidden", border: `1px solid ${C.bdr}`, position: "relative", aspectRatio: "16 / 9", background: C.card }}>
-              <img src="/hero-evidence.webp" alt="" loading="lazy" decoding="async" style={{ width: "100%", height: "100%", objectFit: "cover", display: "block", opacity: 0.95 }} />
+              <img src="/public/hero-evidence.webp" alt="" loading="lazy" decoding="async" style={{ width: "100%", height: "100%", objectFit: "cover", display: "block", opacity: 0.95 }} />
               <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, height: "30%", background: `linear-gradient(transparent, ${C.bg})` }} />
             </div>
 
@@ -622,7 +622,7 @@ export default function Kolli404() {
 
             {/* Closure image */}
             <div style={{ marginBottom: 28, overflow: "hidden", border: `1px solid ${C.bdr}`, position: "relative", aspectRatio: "16 / 9", background: C.card }}>
-              <img src="/hero-closure.webp" alt="" loading="lazy" decoding="async" style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
+              <img src="/public/hero-closure.webp" alt="" loading="lazy" decoding="async" style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
             </div>
 
             {/* Case closure */}
