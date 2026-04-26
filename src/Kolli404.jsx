@@ -27,8 +27,8 @@ const C = {
   bdr: "rgba(200,164,93,0.12)",
   bdrStrong: "rgba(200,164,93,0.25)",
   txt: "#E7DED0",
-  muted: "#8F8373",
-  dim: "#5E5549",
+  muted: "#B5ADA0",
+  dim: "#968C80",
   sans: "'IBM Plex Sans', 'Helvetica Neue', sans-serif",
   mono: "'IBM Plex Mono', 'Courier New', monospace",
   serif: "'Georgia', serif",
@@ -328,9 +328,9 @@ export default function Kolli404() {
     return fields.map((f, i) => {
       const found = f.ck && observations.includes(f.ck);
       return (
-        <div key={i} style={{ display: "flex", justifyContent: "space-between", padding: "7px 0", borderBottom: `1px solid ${C.bdr}`, flexWrap: "wrap", gap: 4 }}>
-          <span style={{ fontFamily: C.mono, fontSize: 10, color: C.dim, letterSpacing: "0.05em", minWidth: 90 }}>{f.label}</span>
-          <span style={{ fontFamily: C.mono, fontSize: 11, color: found ? C.gold : C.txt, textAlign: "right", flex: 1, fontWeight: found ? 600 : 400, transition: "color 0.3s" }}>{f.value}</span>
+        <div key={i} style={{ display: "flex", justifyContent: "space-between", padding: "8px 0", borderBottom: `1px solid ${C.bdr}`, flexWrap: "wrap", gap: 4 }}>
+          <span style={{ fontFamily: C.mono, fontSize: 11, color: C.dim, letterSpacing: "0.05em", minWidth: 90 }}>{f.label}</span>
+          <span style={{ fontFamily: C.mono, fontSize: 12, color: found ? C.gold : C.txt, textAlign: "right", flex: 1, fontWeight: found ? 600 : 400, transition: "color 0.3s" }}>{f.value}</span>
         </div>
       );
     });
@@ -342,9 +342,9 @@ export default function Kolli404() {
         <div style={{ width: 6, height: 6, borderRadius: "50%", border: `1.5px solid ${C.muted}`, position: "absolute", left: 0, top: 5, background: "transparent" }} />
         {i < data.length - 1 && <div style={{ position: "absolute", left: 2.5, top: 14, width: 1, height: "calc(100% - 8px)", background: C.bdr }} />}
         <div style={{ display: "flex", flexDirection: "column", gap: 1 }}>
-          <span style={{ fontFamily: C.mono, fontSize: 10, color: C.dim }}>{t.time}</span>
-          <span style={{ fontFamily: C.sans, fontSize: 12, color: C.txt, fontWeight: 500 }}>{t.status}</span>
-          {t.loc && <span style={{ fontFamily: C.sans, fontSize: 10, color: C.dim, fontStyle: "italic" }}>{t.loc}</span>}
+          <span style={{ fontFamily: C.mono, fontSize: 11, color: C.dim }}>{t.time}</span>
+          <span style={{ fontFamily: C.sans, fontSize: 13, color: C.txt, fontWeight: 500 }}>{t.status}</span>
+          {t.loc && <span style={{ fontFamily: C.sans, fontSize: 11, color: C.dim, fontStyle: "italic" }}>{t.loc}</span>}
         </div>
       </div>
     ));
@@ -354,24 +354,24 @@ export default function Kolli404() {
     return (
       <div>
         {[["From", em.from], ["To", em.to], ["Date", em.date]].map(([l, v], i) => (
-          <div key={i} style={{ marginBottom: 4, fontSize: 11 }}>
-            <span style={{ fontFamily: C.mono, color: C.dim, fontSize: 10 }}>{l}:</span>{" "}
+          <div key={i} style={{ marginBottom: 5, fontSize: 13 }}>
+            <span style={{ fontFamily: C.mono, color: C.dim, fontSize: 11 }}>{l}:</span>{" "}
             <span style={{ fontFamily: C.mono, color: C.muted }}>{v}</span>
           </div>
         ))}
-        <div style={{ marginBottom: 4, fontSize: 11 }}>
-          <span style={{ fontFamily: C.mono, color: C.dim, fontSize: 10 }}>Subject:</span>{" "}
-          <span style={{ fontFamily: C.mono, color: C.gold, fontSize: 11 }}>{em.subject}</span>
+        <div style={{ marginBottom: 5, fontSize: 13 }}>
+          <span style={{ fontFamily: C.mono, color: C.dim, fontSize: 11 }}>Subject:</span>{" "}
+          <span style={{ fontFamily: C.mono, color: C.gold, fontSize: 12 }}>{em.subject}</span>
         </div>
-        <div style={{ fontFamily: C.sans, fontSize: 12, color: C.txt, lineHeight: 1.7, marginTop: 14, padding: "14px 16px", background: C.bg, borderLeft: `2px solid ${C.bdr}`, whiteSpace: "pre-wrap" }}>{em.body}</div>
+        <div style={{ fontFamily: C.sans, fontSize: 13, color: C.txt, lineHeight: 1.8, marginTop: 16, padding: "16px 18px", background: C.bg, borderLeft: `2px solid ${C.bdr}`, whiteSpace: "pre-wrap" }}>{em.body}</div>
       </div>
     );
   }
 
   function renderClue(clue) {
     return (
-      <div style={{ background: C.card, border: `1px solid ${C.bdr}`, padding: "20px 18px", marginBottom: 10 }}>
-        <div style={{ fontFamily: C.mono, fontSize: 10, letterSpacing: "0.15em", color: C.dim, marginBottom: 14, paddingBottom: 10, borderBottom: `1px solid ${C.bdr}` }}>{clue.docTitle}</div>
+      <div style={{ background: C.card, border: `1px solid ${C.bdr}`, padding: "22px 22px", marginBottom: 12 }}>
+        <div style={{ fontFamily: C.mono, fontSize: 11, letterSpacing: "0.15em", color: C.muted, marginBottom: 16, paddingBottom: 12, borderBottom: `1px solid ${C.bdr}` }}>{clue.docTitle}</div>
         {clue.fields && renderFields(clue.fields)}
         {clue.tracking && <div style={{ paddingLeft: 4, paddingTop: 4 }}>{renderTracking(clue.tracking)}</div>}
         {clue.email && renderEmail(clue.email)}
@@ -384,9 +384,9 @@ export default function Kolli404() {
     const q = clue.question;
     const isActive = activeId === clue.id;
     return (
-      <div style={{ background: C.panel, border: `1px solid ${C.bdr}`, padding: "16px 16px 14px" }}>
-        <p style={{ fontFamily: C.sans, fontSize: 13, color: C.txt, marginBottom: 4, fontWeight: 500 }}>{q.prompt}</p>
-        {!cs.answered && <p style={{ fontFamily: C.mono, fontSize: 9, color: C.dim, marginBottom: 12, letterSpacing: "0.05em" }}>
+      <div style={{ background: C.panel, border: `1px solid ${C.bdr}`, padding: "20px 20px 16px" }}>
+        <p style={{ fontFamily: C.sans, fontSize: 14, color: C.txt, marginBottom: 4, fontWeight: 500 }}>{q.prompt}</p>
+        {!cs.answered && <p style={{ fontFamily: C.mono, fontSize: 10, color: C.dim, marginBottom: 14, letterSpacing: "0.05em" }}>
           {cs.attempts === 0 ? "Du har två försök." : "Sista försöket."}
         </p>}
         {cs.answered && <div style={{ height: 12 }} />}
@@ -403,7 +403,7 @@ export default function Kolli404() {
             }
             return (
               <button key={opt.key} disabled={cs.answered}
-                style={{ textAlign: "left", fontFamily: C.sans, fontSize: 12, color: col, background: bgC, border: `1px solid ${brd}`, padding: "9px 13px", cursor: cs.answered ? "default" : "pointer", lineHeight: 1.5, transition: "all 0.15s" }}
+                style={{ textAlign: "left", fontFamily: C.sans, fontSize: 13, color: col, background: bgC, border: `1px solid ${brd}`, padding: "10px 14px", cursor: cs.answered ? "default" : "pointer", lineHeight: 1.5, transition: "all 0.15s" }}
                 onClick={() => attempt(clue, opt.key)}
                 onMouseEnter={e => { if (!cs.answered) e.currentTarget.style.borderColor = C.bdrStrong; }}
                 onMouseLeave={e => { if (!cs.answered) e.currentTarget.style.borderColor = C.bdr; }}
@@ -412,17 +412,17 @@ export default function Kolli404() {
           })}
         </div>
         {isActive && feedback === "correct" && (
-          <div style={{ marginTop: 12, padding: "11px 13px", background: C.greenSoft, border: `1px solid rgba(111,143,114,0.25)`, fontSize: 12, lineHeight: 1.6, color: "#b8d4c0", display: "flex", gap: 10, fontFamily: C.sans }}>
+          <div style={{ marginTop: 14, padding: "12px 14px", background: C.greenSoft, border: `1px solid rgba(111,143,114,0.25)`, fontSize: 13, lineHeight: 1.7, color: "#b8d4c0", display: "flex", gap: 10, fontFamily: C.sans }}>
             <span style={{ fontFamily: C.mono, fontWeight: 600, flexShrink: 0 }}>✓</span><span>{q.insight}</span>
           </div>
         )}
         {isActive && feedback === "wrong" && !cs.answered && (
-          <div style={{ marginTop: 12, padding: "11px 13px", background: C.redSoft, border: `1px solid rgba(159,79,70,0.25)`, fontSize: 12, lineHeight: 1.6, color: "#d4b8a8", display: "flex", gap: 10, fontFamily: C.sans }}>
+          <div style={{ marginTop: 14, padding: "12px 14px", background: C.redSoft, border: `1px solid rgba(159,79,70,0.25)`, fontSize: 13, lineHeight: 1.7, color: "#d4b8a8", display: "flex", gap: 10, fontFamily: C.sans }}>
             <span style={{ fontFamily: C.mono, fontWeight: 600, flexShrink: 0 }}>—</span><span>{q.wrongHint}</span>
           </div>
         )}
         {isActive && feedback === "locked" && (
-          <div style={{ marginTop: 12, padding: "11px 13px", background: C.redSoft, border: `1px solid rgba(159,79,70,0.25)`, fontSize: 12, lineHeight: 1.6, color: "#d4b8a8", display: "flex", gap: 10, fontFamily: C.sans }}>
+          <div style={{ marginTop: 14, padding: "12px 14px", background: C.redSoft, border: `1px solid rgba(159,79,70,0.25)`, fontSize: 13, lineHeight: 1.7, color: "#d4b8a8", display: "flex", gap: 10, fontFamily: C.sans }}>
             <span style={{ fontFamily: C.mono, fontWeight: 600, flexShrink: 0 }}>✗</span><span>Observationen missades. Rätt svar: {q.options.find(o => o.key === q.correctKey)?.text}</span>
           </div>
         )}
@@ -434,12 +434,12 @@ export default function Kolli404() {
   if (phase === "intro") {
     return (
       <div style={{ minHeight: "100vh", background: C.bg, color: C.txt, fontFamily: C.sans }}>
-        <div style={{ maxWidth: 500, margin: "0 auto", padding: "52px 24px 60px" }}>
+        <div style={{ maxWidth: 580, margin: "0 auto", padding: "52px 28px 60px" }}>
           <div style={{ fontFamily: C.mono, fontSize: 10, letterSpacing: "0.2em", color: C.gold, marginBottom: 24 }}>LOGISTIKGÅTA</div>
           <h1 style={{ fontFamily: C.mono, fontSize: "clamp(28px,8vw,42px)", fontWeight: 600, color: C.txt, letterSpacing: "0.08em", margin: "0 0 6px", lineHeight: 1.15 }}>KOLLI 404</h1>
           <p style={{ fontFamily: C.mono, fontSize: 11, color: C.dim, letterSpacing: "0.12em", marginBottom: 40 }}>FRIGJORD DEKLARATION, SAKNAT MATERIAL</p>
 
-          <div style={{ background: C.card, border: `1px solid ${C.bdr}`, padding: "26px 22px", marginBottom: 32 }}>
+          <div style={{ background: C.card, border: `1px solid ${C.bdr}`, padding: "32px 28px", marginBottom: 36 }}>
             <div style={{ textAlign: "right", marginBottom: 18 }}>
               <span style={{ fontFamily: C.mono, fontSize: 10, letterSpacing: "0.2em", color: C.red, border: `1px solid ${C.red}`, padding: "3px 12px", display: "inline-block" }}>OLÖST</span>
             </div>
@@ -453,28 +453,28 @@ export default function Kolli404() {
             </div>
 
             <p style={{ fontFamily: C.mono, fontSize: 12, color: C.dim, lineHeight: 1.6, marginBottom: 8 }}>16:18 ringer produktionschefen.</p>
-            <p style={{ fontFamily: C.serif, fontSize: 16, fontStyle: "italic", color: C.txt, margin: "12px 0 20px", lineHeight: 1.6, borderLeft: `2px solid ${C.goldBorder}`, paddingLeft: 16 }}>
+            <p style={{ fontFamily: C.serif, fontSize: 17, fontStyle: "italic", color: C.txt, margin: "16px 0 24px", lineHeight: 1.7, borderLeft: `2px solid ${C.goldBorder}`, paddingLeft: 18 }}>
               "Ni säger att materialet är levererat.<br />
               Tullombudet säger att importdeklarationen är frigjord.<br />
               3PL säger att kollit är mottaget i WMS.<br /><br />
               Men vår lina står fortfarande utan reservdelen."
             </p>
 
-            <div style={{ fontFamily: C.sans, fontSize: 13, color: C.muted, lineHeight: 1.8 }}>
-              <p style={{ marginBottom: 4 }}>En akut reservdel från Storbritannien skulle vara på plats i produktionen i Värnamo före 14:00.</p>
-              <p style={{ marginBottom: 4 }}>Transportören visar levererat till 3PL.</p>
-              <p style={{ marginBottom: 4 }}>Importdeklarationen har status <span style={{ fontFamily: C.mono, color: C.green, fontSize: 11 }}>Frigjord</span>.</p>
-              <p style={{ marginBottom: 4 }}>3PL:s WMS visar mottaget gods.</p>
-              <p style={{ marginBottom: 0, marginTop: 12 }}>Ändå finns materialet inte tillgängligt för produktionen.</p>
+            <div style={{ fontFamily: C.sans, fontSize: 14, color: C.muted, lineHeight: 1.9 }}>
+              <p style={{ marginBottom: 8 }}>En akut reservdel från Storbritannien skulle vara på plats i produktionen i Värnamo före 14:00.</p>
+              <p style={{ marginBottom: 8 }}>Transportören visar levererat till 3PL.</p>
+              <p style={{ marginBottom: 8 }}>Importdeklarationen har status <span style={{ fontFamily: C.mono, color: C.green, fontSize: 12 }}>Frigjord</span>.</p>
+              <p style={{ marginBottom: 8 }}>3PL:s WMS visar mottaget gods.</p>
+              <p style={{ marginBottom: 0, marginTop: 16 }}>Ändå finns materialet inte tillgängligt för produktionen.</p>
             </div>
 
-            <p style={{ fontFamily: C.serif, fontStyle: "italic", color: C.gold, marginTop: 20, fontSize: 14 }}>Alla system visar något som ser korrekt ut. Ingen status visar hela kedjan.</p>
+            <p style={{ fontFamily: C.serif, fontStyle: "italic", color: C.gold, marginTop: 24, fontSize: 15 }}>Alla system visar något som ser korrekt ut. Ingen status visar hela kedjan.</p>
 
-            <div style={{ height: 1, background: C.bdr, margin: "20px 0" }} />
+            <div style={{ height: 1, background: C.bdr, margin: "26px 0" }} />
 
-            <div style={{ fontFamily: C.sans, fontSize: 13, color: C.muted, lineHeight: 1.8 }}>
-              <p style={{ marginBottom: 4 }}>Du har fått tillgång till interna underlag från transportör, tullombud, 3PL och kund.</p>
-              <p style={{ marginTop: 14, fontWeight: 500, color: C.txt }}>Din uppgift: hitta vilken kedja av händelser som gjorde att alla kunde säga "vi gjorde rätt" — samtidigt som leveransen blev fel.</p>
+            <div style={{ fontFamily: C.sans, fontSize: 14, color: C.muted, lineHeight: 1.9 }}>
+              <p style={{ marginBottom: 8 }}>Du har fått tillgång till interna underlag från transportör, tullombud, 3PL och kund.</p>
+              <p style={{ marginTop: 16, fontWeight: 500, color: C.txt }}>Din uppgift: hitta vilken kedja av händelser som gjorde att alla kunde säga "vi gjorde rätt" — samtidigt som leveransen blev fel.</p>
             </div>
           </div>
 
@@ -488,11 +488,11 @@ export default function Kolli404() {
   return (
     <div style={{ minHeight: "100vh", background: C.bg, color: C.txt, fontFamily: C.sans }}>
       <header style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "12px 20px", borderBottom: `1px solid ${C.bdr}`, background: C.bg, position: "sticky", top: 0, zIndex: 10 }}>
-        <span style={{ fontFamily: C.mono, fontSize: 10, letterSpacing: "0.15em", color: C.gold, fontWeight: 500 }}>K404-2026</span>
-        <span style={{ fontFamily: C.mono, fontSize: 9, color: C.dim, letterSpacing: "0.08em" }}>UTREDNING {obsCount}/6</span>
+        <span style={{ fontFamily: C.mono, fontSize: 11, letterSpacing: "0.15em", color: C.gold, fontWeight: 500 }}>K404-2026</span>
+        <span style={{ fontFamily: C.mono, fontSize: 10, color: C.dim, letterSpacing: "0.08em" }}>UTREDNING {obsCount}/6</span>
       </header>
 
-      <div style={{ maxWidth: 540, margin: "0 auto", padding: "18px 18px 80px", overflowY: "auto", maxHeight: "calc(100vh - 48px)" }} ref={ref}>
+      <div style={{ maxWidth: 600, margin: "0 auto", padding: "20px 22px 80px", overflowY: "auto", maxHeight: "calc(100vh - 48px)" }} ref={ref}>
 
         {!showSolution && (
           <>
@@ -508,16 +508,16 @@ export default function Kolli404() {
                     style={{
                       background: active ? C.panel : C.card, border: `1px solid ${active ? C.goldBorder : C.bdr}`,
                       padding: "13px 13px 11px", cursor: "pointer", textAlign: "left", position: "relative",
-                      transition: "all 0.2s", opacity: !opened ? 0.45 : 1,
+                      transition: "all 0.2s", opacity: !opened ? 0.7 : 1,
                       boxShadow: active ? `0 0 20px ${C.goldGlow}` : "none",
                     }}
                     onMouseEnter={e => { if (!active) e.currentTarget.style.borderColor = C.bdrStrong; }}
                     onMouseLeave={e => { if (!active) e.currentTarget.style.borderColor = active ? C.goldBorder : C.bdr; }}
                   >
-                    <div style={{ fontFamily: C.mono, fontSize: 9, letterSpacing: "0.2em", color: C.dim, marginBottom: 4 }}>{c.code}</div>
-                    <div style={{ fontFamily: C.sans, fontSize: 11, color: opened ? C.txt : C.muted, fontWeight: 500 }}>{opened ? c.title : "Ogranskad"}</div>
-                    {hasObs && <div style={{ fontFamily: C.mono, fontSize: 8, color: C.green, marginTop: 5, letterSpacing: "0.1em" }}>OBSERVATION HITTAD</div>}
-                    {cs?.answered && !hasObs && <div style={{ fontFamily: C.mono, fontSize: 8, color: C.dim, marginTop: 5, letterSpacing: "0.1em" }}>GRANSKAD</div>}
+                    <div style={{ fontFamily: C.mono, fontSize: 10, letterSpacing: "0.2em", color: C.dim, marginBottom: 4 }}>{c.code}</div>
+                    <div style={{ fontFamily: C.sans, fontSize: 12, color: opened ? C.txt : C.muted, fontWeight: 500 }}>{opened ? c.title : "Ogranskad"}</div>
+                    {hasObs && <div style={{ fontFamily: C.mono, fontSize: 9, color: C.green, marginTop: 6, letterSpacing: "0.1em" }}>OBSERVATION HITTAD</div>}
+                    {cs?.answered && !hasObs && <div style={{ fontFamily: C.mono, fontSize: 9, color: C.dim, marginTop: 6, letterSpacing: "0.1em" }}>GRANSKAD</div>}
                   </button>
                 );
               })}
