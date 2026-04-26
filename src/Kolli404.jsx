@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 
-/* ─── FONTS ─── */
+/* ─── FONTS & ANIMATIONS ─── */
 const loadFonts = () => {
   if (typeof document === "undefined") return;
   if (document.getElementById("k404-fonts")) return;
@@ -9,6 +9,53 @@ const loadFonts = () => {
   link.rel = "stylesheet";
   link.href = "https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@300;400;500;600&display=swap";
   document.head.appendChild(link);
+
+  if (document.getElementById("k404-css")) return;
+  const style = document.createElement("style");
+  style.id = "k404-css";
+  style.textContent = `
+    @keyframes k404fadeIn {
+      from { opacity: 0; transform: translateY(12px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes k404fadeOnly {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    @keyframes k404pulse {
+      0%, 100% { box-shadow: 0 0 12px rgba(200,164,93,0.06); }
+      50% { box-shadow: 0 0 24px rgba(200,164,93,0.18); }
+    }
+    @keyframes k404glow {
+      0%, 100% { opacity: 0.4; }
+      50% { opacity: 1; }
+    }
+    @keyframes k404scanline {
+      0% { transform: translateY(-100%); }
+      100% { transform: translateY(100vh); }
+    }
+    @keyframes k404slideIn {
+      from { opacity: 0; transform: translateY(16px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes k404borderGlow {
+      0%, 100% { border-color: rgba(200,164,93,0.25); }
+      50% { border-color: rgba(200,164,93,0.55); }
+    }
+    .k404-card-enter { animation: k404fadeIn 0.4s ease-out both; }
+    .k404-doc-enter { animation: k404slideIn 0.5s ease-out both; }
+    .k404-fade { animation: k404fadeOnly 0.6s ease-out both; }
+    .k404-pulse { animation: k404pulse 3s ease-in-out infinite; }
+    .k404-glow { animation: k404glow 2s ease-in-out infinite; }
+    .k404-border-glow { animation: k404borderGlow 2.5s ease-in-out infinite; }
+    .k404-stagger-1 { animation: k404fadeIn 0.4s ease-out 0.05s both; }
+    .k404-stagger-2 { animation: k404fadeIn 0.4s ease-out 0.1s both; }
+    .k404-stagger-3 { animation: k404fadeIn 0.4s ease-out 0.15s both; }
+    .k404-stagger-4 { animation: k404fadeIn 0.4s ease-out 0.2s both; }
+    .k404-stagger-5 { animation: k404fadeIn 0.4s ease-out 0.25s both; }
+    .k404-stagger-6 { animation: k404fadeIn 0.4s ease-out 0.3s both; }
+  `;
+  document.head.appendChild(style);
 };
 
 /* ─── PALETTE ─── */
@@ -308,12 +355,13 @@ export default function Kolli404() {
 
   /* ─── RENDER HELPERS ─── */
 
-  const Btn = ({ children, onClick, disabled, variant = "primary" }) => (
+  const Btn = ({ children, onClick, disabled, variant = "primary", glow = false }) => (
     <button onClick={onClick} disabled={disabled}
+      className={glow ? "k404-border-glow" : ""}
       style={{
-        display: "block", width: "100%", fontFamily: C.mono, fontSize: 11, letterSpacing: "0.18em",
-        padding: "13px 0", cursor: disabled ? "default" : "pointer", fontWeight: 500, marginTop: 8,
-        transition: "all 0.2s",
+        display: "block", width: "100%", fontFamily: C.mono, fontSize: 12, letterSpacing: "0.18em",
+        padding: "14px 0", cursor: disabled ? "default" : "pointer", fontWeight: 500, marginTop: 8,
+        transition: "all 0.3s",
         ...(variant === "primary"
           ? { background: C.goldSoft, border: `1px solid ${C.goldBorder}`, color: C.gold }
           : { background: "transparent", border: `1px solid ${C.bdr}`, color: C.muted }),
@@ -433,15 +481,20 @@ export default function Kolli404() {
   /* ─── INTRO ─── */
   if (phase === "intro") {
     return (
-      <div style={{ minHeight: "100vh", background: C.bg, color: C.txt, fontFamily: C.sans }}>
-        <div style={{ maxWidth: 580, margin: "0 auto", padding: "52px 28px 60px" }}>
-          <div style={{ fontFamily: C.mono, fontSize: 10, letterSpacing: "0.2em", color: C.gold, marginBottom: 24 }}>LOGISTIKGÅTA</div>
-          <h1 style={{ fontFamily: C.mono, fontSize: "clamp(28px,8vw,42px)", fontWeight: 600, color: C.txt, letterSpacing: "0.08em", margin: "0 0 6px", lineHeight: 1.15 }}>KOLLI 404</h1>
-          <p style={{ fontFamily: C.mono, fontSize: 11, color: C.dim, letterSpacing: "0.12em", marginBottom: 40 }}>FRIGJORD DEKLARATION, SAKNAT MATERIAL</p>
+      <div style={{ minHeight: "100vh", background: C.bg, color: C.txt, fontFamily: C.sans, position: "relative", overflow: "hidden" }}>
+        {/* Subtle background grid */}
+        <div style={{ position: "fixed", inset: 0, opacity: 0.025, backgroundImage: "radial-gradient(circle at 1px 1px, rgba(200,164,93,0.4) 1px, transparent 0)", backgroundSize: "40px 40px", pointerEvents: "none" }} />
+        {/* Slow scanline */}
+        <div style={{ position: "fixed", top: 0, left: 0, right: 0, height: "1px", background: "linear-gradient(90deg, transparent 0%, rgba(200,164,93,0.15) 50%, transparent 100%)", animation: "k404scanline 8s linear infinite", pointerEvents: "none", zIndex: 1 }} />
+        
+        <div style={{ maxWidth: 580, margin: "0 auto", padding: "52px 28px 60px", position: "relative", zIndex: 2 }}>
+          <div className="k404-fade" style={{ fontFamily: C.mono, fontSize: 10, letterSpacing: "0.2em", color: C.gold, marginBottom: 24 }}>LOGISTIKGÅTA</div>
+          <h1 className="k404-card-enter" style={{ fontFamily: C.mono, fontSize: "clamp(28px,8vw,42px)", fontWeight: 600, color: C.txt, letterSpacing: "0.08em", margin: "0 0 6px", lineHeight: 1.15 }}>KOLLI 404</h1>
+          <p className="k404-card-enter" style={{ fontFamily: C.mono, fontSize: 11, color: C.dim, letterSpacing: "0.12em", marginBottom: 40 }}>FRIGJORD DEKLARATION, SAKNAT MATERIAL</p>
 
-          <div style={{ background: C.card, border: `1px solid ${C.bdr}`, padding: "32px 28px", marginBottom: 36 }}>
+          <div className="k404-doc-enter" style={{ background: C.card, border: `1px solid ${C.bdr}`, padding: "32px 28px", marginBottom: 36 }}>
             <div style={{ textAlign: "right", marginBottom: 18 }}>
-              <span style={{ fontFamily: C.mono, fontSize: 10, letterSpacing: "0.2em", color: C.red, border: `1px solid ${C.red}`, padding: "3px 12px", display: "inline-block" }}>OLÖST</span>
+              <span className="k404-border-glow" style={{ fontFamily: C.mono, fontSize: 10, letterSpacing: "0.2em", color: C.red, border: `1px solid ${C.red}`, padding: "3px 12px", display: "inline-block" }}>OLÖST</span>
             </div>
 
             <div style={{ fontFamily: C.mono, fontSize: 9, color: C.dim, letterSpacing: "0.08em", lineHeight: 2, marginBottom: 18, borderBottom: `1px solid ${C.bdr}`, paddingBottom: 14 }}>
@@ -478,7 +531,7 @@ export default function Kolli404() {
             </div>
           </div>
 
-          <Btn onClick={() => setPhase("investigate")}>ÖPPNA CASE FILE</Btn>
+          <Btn glow onClick={() => setPhase("investigate")}>ÖPPNA CASE FILE</Btn>
         </div>
       </div>
     );
@@ -486,29 +539,58 @@ export default function Kolli404() {
 
   /* ─── INVESTIGATE / THEORY / SOLUTION ─── */
   return (
-    <div style={{ minHeight: "100vh", background: C.bg, color: C.txt, fontFamily: C.sans }}>
+    <div style={{ minHeight: "100vh", background: C.bg, color: C.txt, fontFamily: C.sans, position: "relative", overflow: "hidden" }}>
+      {/* Background grid */}
+      <div style={{ position: "fixed", inset: 0, opacity: 0.025, backgroundImage: "radial-gradient(circle at 1px 1px, rgba(200,164,93,0.4) 1px, transparent 0)", backgroundSize: "40px 40px", pointerEvents: "none" }} />
+      {/* Scanline */}
+      <div style={{ position: "fixed", top: 0, left: 0, right: 0, height: "1px", background: "linear-gradient(90deg, transparent 0%, rgba(200,164,93,0.12) 50%, transparent 100%)", animation: "k404scanline 8s linear infinite", pointerEvents: "none", zIndex: 1 }} />
+      
       <header style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "12px 20px", borderBottom: `1px solid ${C.bdr}`, background: C.bg, position: "sticky", top: 0, zIndex: 10 }}>
         <span style={{ fontFamily: C.mono, fontSize: 11, letterSpacing: "0.15em", color: C.gold, fontWeight: 500 }}>K404-2026</span>
-        <span style={{ fontFamily: C.mono, fontSize: 10, color: C.dim, letterSpacing: "0.08em" }}>UTREDNING {obsCount}/6</span>
+        {/* Observation dots */}
+        <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
+          {[0,1,2,3,4,5].map(i => (
+            <div key={i} style={{
+              width: 7, height: 7, borderRadius: "50%",
+              background: i < obsCount ? C.gold : "transparent",
+              border: `1.5px solid ${i < obsCount ? C.gold : C.dim}`,
+              transition: "all 0.5s ease",
+              boxShadow: i < obsCount ? `0 0 8px ${C.goldGlow}` : "none",
+            }} />
+          ))}
+          <span style={{ fontFamily: C.mono, fontSize: 10, color: C.dim, letterSpacing: "0.08em", marginLeft: 6 }}>{obsCount}/6</span>
+        </div>
       </header>
 
       <div style={{ maxWidth: 600, margin: "0 auto", padding: "20px 22px 80px", overflowY: "auto", maxHeight: "calc(100vh - 48px)" }} ref={ref}>
 
         {!showSolution && (
           <>
-            <p style={{ fontFamily: C.mono, fontSize: 9, letterSpacing: "0.15em", color: C.dim, marginBottom: 12, textTransform: "uppercase" }}>Granska bevis</p>
+            {/* Case context reminder */}
+            <div className="k404-fade" style={{ background: C.card, border: `1px solid ${C.bdr}`, padding: "16px 18px", marginBottom: 20 }}>
+              <div style={{ fontFamily: C.mono, fontSize: 10, letterSpacing: "0.15em", color: C.gold, marginBottom: 10 }}>ÄRENDET</div>
+              <p style={{ fontFamily: C.serif, fontSize: 14, fontStyle: "italic", color: C.txt, lineHeight: 1.6, marginBottom: 10, borderLeft: `2px solid ${C.goldBorder}`, paddingLeft: 14 }}>
+                "Ni säger att materialet är levererat. Men vår lina står fortfarande utan reservdelen."
+              </p>
+              <p style={{ fontFamily: C.sans, fontSize: 12, color: C.muted, lineHeight: 1.7 }}>
+                Akut reservdel, Northbridge Components (UK) → NordAxel Manufacturing (Värnamo). Produktionskritiskt före 14:00. Transportör, tullombud och 3PL visar alla grön status — men materialet är inte tillgängligt.
+              </p>
+            </div>
+
+            <p className="k404-fade" style={{ fontFamily: C.mono, fontSize: 10, letterSpacing: "0.15em", color: C.dim, marginBottom: 14, textTransform: "uppercase" }}>Granska bevis</p>
             <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 7, marginBottom: 22 }}>
-              {CLUES.map(c => {
+              {CLUES.map((c, idx) => {
                 const opened = openedClues.includes(c.id);
                 const active = activeId === c.id;
                 const cs = clueState[c.id];
                 const hasObs = observations.includes(c.observationKey);
                 return (
                   <button key={c.id} onClick={() => openClue(c.id)}
+                    className={`k404-stagger-${idx + 1}${active ? " k404-pulse" : ""}`}
                     style={{
                       background: active ? C.panel : C.card, border: `1px solid ${active ? C.goldBorder : C.bdr}`,
                       padding: "13px 13px 11px", cursor: "pointer", textAlign: "left", position: "relative",
-                      transition: "all 0.2s", opacity: !opened ? 0.7 : 1,
+                      transition: "all 0.3s ease", opacity: !opened ? 0.7 : 1,
                       boxShadow: active ? `0 0 20px ${C.goldGlow}` : "none",
                     }}
                     onMouseEnter={e => { if (!active) e.currentTarget.style.borderColor = C.bdrStrong; }}
@@ -526,14 +608,14 @@ export default function Kolli404() {
         )}
 
         {ac && !showSolution && (
-          <div style={{ marginBottom: 20 }}>
+          <div className="k404-doc-enter" key={ac.id} style={{ marginBottom: 20 }}>
             {renderClue(ac)}
             {renderQuestion(ac)}
           </div>
         )}
 
         {canTheory && !showSolution && !showTheoryPanel && (
-          <div style={{ background: C.card, border: `1px solid ${C.goldBorder}`, padding: "18px 16px", marginBottom: 20 }}>
+          <div className="k404-card-enter" style={{ background: C.card, border: `1px solid ${C.goldBorder}`, padding: "18px 16px", marginBottom: 20 }}>
             <div style={{ fontFamily: C.mono, fontSize: 9, letterSpacing: "0.15em", color: C.gold, marginBottom: 6 }}>TILLRÄCKLIGT UNDERLAG</div>
             <p style={{ fontFamily: C.sans, fontSize: 12, color: C.muted, lineHeight: 1.6, marginBottom: 12 }}>
               Du har granskat {answeredCount} av 6 underlag. Du kan låsa din teori nu — eller granska fler bevis först.
@@ -575,13 +657,13 @@ export default function Kolli404() {
         {theoryLocked && !showSolution && (
           <div style={{ textAlign: "center", padding: "32px 0" }}>
             <p style={{ fontFamily: C.mono, fontSize: 11, color: C.dim, letterSpacing: "0.15em", marginBottom: 16 }}>TEORI LÅST</p>
-            <Btn onClick={() => { setShowSolution(true); setActiveId(null); scroll(); }}>ÖPPNA LÖSNINGEN</Btn>
+            <Btn glow onClick={() => { setShowSolution(true); setActiveId(null); scroll(); }}>ÖPPNA LÖSNINGEN</Btn>
           </div>
         )}
 
         {/* ─── SOLUTION ─── */}
         {showSolution && (
-          <div style={{ paddingBottom: 40 }}>
+          <div className="k404-doc-enter" style={{ paddingBottom: 40 }}>
             <div style={{ background: C.card, border: `1px solid ${C.goldBorder}`, padding: "28px 22px", textAlign: "center", marginBottom: 34 }}>
               <div style={{ fontFamily: C.mono, fontSize: 9, color: C.dim, letterSpacing: "0.15em", marginBottom: 4 }}>Teori: {theoryRight} av 4 rätt</div>
               <div style={{ fontFamily: C.mono, fontSize: 9, color: C.dim, letterSpacing: "0.15em", marginBottom: 16 }}>Observationer: {obsCount} av 6 hittade</div>
