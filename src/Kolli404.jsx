@@ -55,7 +55,7 @@ const C = {
   serif: "'Georgia',serif",
 };
 
-/* ─── EVIDENCE LABELS ─── */
+/* ─── EVIDENCE LABELS & HINTS ─── */
 const EV_LABELS = {
   invoice_ref: "Fakturanr: NCL-88421",
   invoice_po: "PO-referens: PO-7749-A",
@@ -69,6 +69,21 @@ const EV_LABELS = {
   outbound_normal: "Prioritet: Normal",
   outbound_standard: "Ordertyp: Standard replenishment",
   deadline_note: "Kundnotering: Produktionskritiskt före 14:00",
+};
+
+const EV_HINTS = {
+  invoice_ref: "Fakturanumret NCL-88421 följer med godset genom kedjan. Hur matchar 3PL:s WMS detta mot kundens förväntade referens? → Granska WMS-04",
+  invoice_po: "PO-referensen finns på fakturan. Vilken referens förväntar sig mottagande system? → Granska WMS-04",
+  invoice_urgent: "Urgency-markeringen finns här. Följde den med till outbound-flödet? → Granska OUT-06",
+  carrier_delivered: "Transportören anser sig klar. Men vad säger 3PL:s interna status om samma gods? → Granska WMS-04",
+  decl_frigjord: "Deklarationen är frigjord. Vad betyder det för 3PL:s interna release? → Granska WMS-04 eller MAIL-05",
+  wms_scanned: "WMS skannade fakturanumret. Men systemet väntade på en annan referens. → Granska DOC-01",
+  wms_expected_po: "3PL förväntar PO-7749-A — men godset anlände under annat nummer. Vilken referens skickades med? → Granska DOC-01",
+  wms_blocked: "Godset är spärrat i WMS. Men transportören visar levererat. Var finns glappet? → Granska LOG-02",
+  mail_no_match: "3PL bekräftar att matchning misslyckades. Vilken referens saknades? → Granska DOC-01 eller WMS-04",
+  outbound_normal: "Ordern har normal prioritet. Stämmer det med kundens behov? → Granska kundnoteringen i samma dokument",
+  outbound_standard: "Standard replenishment. Matchar det urgency-nivån i ärendet? → Jämför med kundnoteringen",
+  deadline_note: "Produktionskritiskt före 14:00. Vilken prioritet fick outbound-ordern? → Granska prioritetsfältet ovanför",
 };
 
 /* ─── CLUES ─── */
@@ -430,13 +445,13 @@ export default function Kolli404() {
         <div style={{ position: "fixed", inset: 0, opacity: 0.025, backgroundImage: "radial-gradient(circle at 1px 1px, rgba(200,164,93,0.4) 1px, transparent 0)", backgroundSize: "40px 40px", pointerEvents: "none" }} />
         <div style={{ position: "fixed", top: 0, left: 0, right: 0, height: "1px", background: "linear-gradient(90deg, transparent 0%, rgba(200,164,93,0.15) 50%, transparent 100%)", animation: "k404scanline 8s linear infinite", pointerEvents: "none", zIndex: 1 }} />
 
-        <div style={{ maxWidth: 580, margin: "0 auto", padding: "52px 28px 60px", position: "relative", zIndex: 2 }}>
+        <div style={{ maxWidth: 760, margin: "0 auto", padding: "52px 28px 60px", position: "relative", zIndex: 2 }}>
           <div className="k404-fade" style={{ fontFamily: C.mono, fontSize: 10, letterSpacing: "0.2em", color: C.gold, marginBottom: 24 }}>LOGISTIKGÅTA</div>
           <h1 className="k404-card-enter" style={{ fontFamily: C.mono, fontSize: "clamp(28px,8vw,42px)", fontWeight: 600, color: C.txt, letterSpacing: "0.08em", margin: "0 0 6px", lineHeight: 1.15 }}>KOLLI 404</h1>
           <p className="k404-card-enter" style={{ fontFamily: C.mono, fontSize: 11, color: C.dim, letterSpacing: "0.12em", marginBottom: 28 }}>FRIGJORD DEKLARATION, SAKNAT MATERIAL</p>
 
-          <div className="k404-doc-enter" style={{ marginBottom: 28, position: "relative", overflow: "hidden", border: `1px solid ${C.bdr}` }}>
-            <img src="/public/hero-intro.png" alt="" style={{ width: "100%", height: "auto", display: "block" }} />
+          <div className="k404-doc-enter" style={{ marginBottom: 28, position: "relative", overflow: "hidden", border: `1px solid ${C.bdr}`, aspectRatio: "16 / 9", background: C.card }}>
+            <img src="/hero-intro.webp" alt="" loading="eager" decoding="async" style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
           </div>
 
           <div className="k404-doc-enter" style={{ background: C.card, border: `1px solid ${C.bdr}`, padding: "32px 28px", marginBottom: 36 }}>
@@ -500,13 +515,13 @@ export default function Kolli404() {
         </div>
       </header>
 
-      <div style={{ maxWidth: 600, margin: "0 auto", padding: "20px 22px 140px", overflowY: "auto", maxHeight: "calc(100vh - 48px)" }} ref={ref}>
+      <div style={{ maxWidth: 760, margin: "0 auto", padding: "20px 22px 140px", overflowY: "auto", maxHeight: "calc(100vh - 48px)" }} ref={ref}>
 
         {!showSolution && (
           <>
             {/* Evidence overview image */}
-            <div className="k404-fade" style={{ marginBottom: 18, overflow: "hidden", border: `1px solid ${C.bdr}`, position: "relative" }}>
-              <img src="/public/hero-evidence.png" alt="" style={{ width: "100%", height: "auto", display: "block", opacity: 0.9 }} />
+            <div className="k404-fade" style={{ marginBottom: 22, overflow: "hidden", border: `1px solid ${C.bdr}`, position: "relative", aspectRatio: "16 / 9", background: C.card }}>
+              <img src="/hero-evidence.webp" alt="" loading="lazy" decoding="async" style={{ width: "100%", height: "100%", objectFit: "cover", display: "block", opacity: 0.95 }} />
               <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, height: "30%", background: `linear-gradient(transparent, ${C.bg})` }} />
             </div>
 
@@ -606,8 +621,8 @@ export default function Kolli404() {
             </div>
 
             {/* Closure image */}
-            <div style={{ marginBottom: 28, overflow: "hidden", border: `1px solid ${C.bdr}` }}>
-              <img src="/public/hero-closure.png" alt="" style={{ width: "100%", height: "auto", display: "block" }} />
+            <div style={{ marginBottom: 28, overflow: "hidden", border: `1px solid ${C.bdr}`, position: "relative", aspectRatio: "16 / 9", background: C.card }}>
+              <img src="/hero-closure.webp" alt="" loading="lazy" decoding="async" style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
             </div>
 
             {/* Case closure */}
@@ -662,20 +677,30 @@ export default function Kolli404() {
           background: "linear-gradient(transparent, rgba(14,13,11,0.95) 20%)",
           paddingTop: 24,
         }}>
-          <div style={{
-            maxWidth: 600, margin: "0 auto", padding: "0 22px 16px",
-          }}>
+          <div style={{ maxWidth: 760, margin: "0 auto", padding: "0 22px 16px" }}>
             <div style={{
               background: C.card, border: `1px solid ${selectedEvidence.length === 2 ? C.goldBorder : C.bdr}`,
               padding: "14px 18px", transition: "all 0.3s",
               boxShadow: selectedEvidence.length === 2 ? `0 0 20px ${C.goldGlow}` : "0 4px 20px rgba(0,0,0,0.4)",
             }}>
-              <div style={{ fontFamily: C.mono, fontSize: 10, letterSpacing: "0.15em", color: C.gold, marginBottom: 10 }}>VALDA BEVIS</div>
-              <div style={{ display: "flex", gap: 8, marginBottom: 10, minHeight: 32, alignItems: "center" }}>
+              {/* Dynamic guidance */}
+              <div style={{ fontFamily: C.sans, fontSize: 12, color: selectedEvidence.length === 2 ? C.gold : C.muted, marginBottom: 8, lineHeight: 1.6 }}>
+                {selectedEvidence.length === 0 && "Öppna ett underlag och klicka på en ◇-markerad detalj som verkar viktig."}
+                {selectedEvidence.length === 1 && "Bra. Hitta nu en detalj i ett annat underlag som hänger ihop."}
+                {selectedEvidence.length === 2 && "Två bevis valda. Tryck KOPPLA BEVIS för att testa sambandet."}
+              </div>
+              {/* Contextual hint */}
+              {selectedEvidence.length === 1 && EV_HINTS[selectedEvidence[0]] && (
+                <div style={{ fontFamily: C.sans, fontSize: 11, color: C.gold, marginBottom: 10, padding: "8px 12px", background: C.goldSoft, borderLeft: `2px solid ${C.goldBorder}`, lineHeight: 1.6 }}>
+                  💡 {EV_HINTS[selectedEvidence[0]]}
+                </div>
+              )}
+
+              <div style={{ display: "flex", gap: 8, marginBottom: 10, alignItems: "center" }}>
                 {[0, 1].map(i => (
                   <div key={i} style={{
                     flex: 1, fontFamily: C.mono, fontSize: 11, padding: "8px 10px",
-                    border: `1px dashed ${selectedEvidence[i] ? C.gold : "rgba(200,164,93,0.3)"}`,
+                    border: `1px ${selectedEvidence[i] ? "solid" : "dashed"} ${selectedEvidence[i] ? C.gold : "rgba(200,164,93,0.3)"}`,
                     color: selectedEvidence[i] ? C.gold : C.muted,
                     background: selectedEvidence[i] ? C.goldSoft : "rgba(200,164,93,0.04)",
                     transition: "all 0.25s", letterSpacing: "0.03em",
@@ -683,18 +708,18 @@ export default function Kolli404() {
                   }}
                     onClick={() => selectedEvidence[i] && toggleEvidence(selectedEvidence[i])}
                   >
-                    {selectedEvidence[i] ? (EV_LABELS[selectedEvidence[i]] || selectedEvidence[i]) : `Bevis ${i + 1} —`}
+                    {selectedEvidence[i] ? (EV_LABELS[selectedEvidence[i]] || selectedEvidence[i]) : `— välj bevis ${i + 1} —`}
                   </div>
                 ))}
               </div>
               <button
                 disabled={selectedEvidence.length !== 2}
                 onClick={connectEvidence}
-                className={connectResult === "fail" ? "k404-shake" : connectResult === "success" ? "k404-success" : ""}
+                className={connectResult === "fail" ? "k404-shake" : connectResult === "success" ? "k404-success" : selectedEvidence.length === 2 ? "k404-border-glow" : ""}
                 style={{
-                  display: "block", width: "100%", fontFamily: C.mono, fontSize: 11, letterSpacing: "0.15em",
-                  padding: "12px 0", cursor: selectedEvidence.length !== 2 ? "default" : "pointer",
-                  fontWeight: 500, transition: "all 0.3s", border: "none",
+                  display: "block", width: "100%", fontFamily: C.mono, fontSize: 12, letterSpacing: "0.15em",
+                  padding: "13px 0", cursor: selectedEvidence.length !== 2 ? "default" : "pointer",
+                  fontWeight: 500, transition: "all 0.3s",
                   ...(connectResult === "success"
                     ? { background: C.greenSoft, color: C.green, border: `1px solid ${C.green}` }
                     : connectResult === "fail"
@@ -703,12 +728,13 @@ export default function Kolli404() {
                     ? { background: C.goldSoft, color: C.gold, border: `1px solid ${C.goldBorder}` }
                     : selectedEvidence.length === 2
                     ? { background: C.goldSoft, color: C.gold, border: `1px solid ${C.goldBorder}` }
-                    : { background: "rgba(200,164,93,0.04)", color: C.muted, border: `1px solid rgba(200,164,93,0.2)`, opacity: 0.7 }),
+                    : { background: "rgba(200,164,93,0.04)", color: C.dim, border: `1px solid rgba(200,164,93,0.15)` }),
                 }}
               >
-                {connectResult === "success" ? "✓ GENOMBROTT HITTAT"
-                  : connectResult === "fail" ? "INGEN KORRELATION FUNNEN"
-                  : connectResult === "already" ? "REDAN HITTAT"
+                {connectResult === "success" ? "✓ GENOMBROTT — SAMBAND BEKRÄFTAT"
+                  : connectResult === "fail" ? "✗ INGEN KORRELATION — TESTA ANDRA FÄLT"
+                  : connectResult === "already" ? "REDAN HITTAT — LETA VIDARE"
+                  : selectedEvidence.length === 2 ? "→ KOPPLA BEVIS ←"
                   : "KOPPLA BEVIS"}
               </button>
             </div>
