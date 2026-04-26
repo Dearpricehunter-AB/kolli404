@@ -305,6 +305,7 @@ export default function Kolli404() {
   const [showSolution, setShowSolution] = useState(false);
   const [copied, setCopied] = useState(false);
   const [showTheoryPanel, setShowTheoryPanel] = useState(false);
+  const [caseExpanded, setCaseExpanded] = useState(false);
   const ref = useRef(null);
 
   const scroll = () => setTimeout(() => ref.current?.scrollTo({ top: ref.current.scrollHeight, behavior: "smooth" }), 100);
@@ -624,14 +625,36 @@ export default function Kolli404() {
               <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, height: "30%", background: `linear-gradient(transparent, ${C.bg})` }} />
             </div>
 
-            {/* Case context reminder */}
+            {/* Case context — expandable */}
             <div className="k404-fade" style={{ background: C.card, border: `1px solid ${C.bdr}`, padding: "16px 18px", marginBottom: 20 }}>
-              <div style={{ fontFamily: C.mono, fontSize: 10, letterSpacing: "0.15em", color: C.gold, marginBottom: 10 }}>ÄRENDET</div>
+              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 10, cursor: "pointer" }} onClick={() => setCaseExpanded(!caseExpanded)}>
+                <div style={{ fontFamily: C.mono, fontSize: 10, letterSpacing: "0.15em", color: C.gold }}>ÄRENDET</div>
+                <span style={{ fontFamily: C.mono, fontSize: 10, color: C.dim, letterSpacing: "0.08em" }}>{caseExpanded ? "DÖLJ ▴" : "VISA MER ▾"}</span>
+              </div>
               <p style={{ fontFamily: C.serif, fontSize: 14, fontStyle: "italic", color: C.txt, lineHeight: 1.6, marginBottom: 12, borderLeft: `2px solid ${C.goldBorder}`, paddingLeft: 14 }}>
                 "Ni säger att materialet är levererat. Men vår lina står fortfarande utan reservdelen."
               </p>
+
+              {/* Expanded: full case details */}
+              {caseExpanded && (
+                <div className="k404-fade" style={{ marginTop: 12, paddingTop: 12, borderTop: `1px solid ${C.bdr}` }}>
+                  <p style={{ fontFamily: C.sans, fontSize: 13, color: C.muted, lineHeight: 1.8, marginBottom: 10 }}>
+                    En akut reservdel från Storbritannien (Northbridge Components, Manchester) skulle vara på plats i produktionen hos NordAxel Manufacturing i Värnamo före 14:00.
+                  </p>
+                  <p style={{ fontFamily: C.sans, fontSize: 13, color: C.muted, lineHeight: 1.8, marginBottom: 10 }}>
+                    Godset kräver importhantering eftersom det kommer från land utanför EU. Tullombudet ScanBroker hanterar importdeklarationen. ScanDist 3PL i Värnamo tar emot och lagerhanterar.
+                  </p>
+                  <p style={{ fontFamily: C.sans, fontSize: 13, color: C.muted, lineHeight: 1.8, marginBottom: 10 }}>
+                    Alla system visar grön status. Men materialet är inte operativt tillgängligt för produktionen.
+                  </p>
+                  <p style={{ fontFamily: C.sans, fontSize: 13, color: C.txt, lineHeight: 1.8, fontWeight: 500 }}>
+                    Din uppgift: hitta vilken kedja av händelser som gjorde att alla kunde säga "vi gjorde rätt" — samtidigt som leveransen blev fel.
+                  </p>
+                </div>
+              )}
+
               {/* Compact inline flow */}
-              <div style={{ display: "flex", alignItems: "center", gap: 0, flexWrap: "wrap", marginTop: 6 }}>
+              <div style={{ display: "flex", alignItems: "center", gap: 0, flexWrap: "wrap", marginTop: caseExpanded ? 12 : 6 }}>
                 {[
                   { label: "Transportör", ok: true },
                   { label: "Tullombud", ok: true },
