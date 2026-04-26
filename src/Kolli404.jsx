@@ -495,7 +495,7 @@ export default function Kolli404() {
 
           {/* Hero image */}
           <div className="k404-doc-enter" style={{ marginBottom: 28, position: "relative", overflow: "hidden", border: `1px solid ${C.bdr}` }}>
-            <img src="/hero-intro.png" alt="" style={{ width: "100%", height: "auto", display: "block" }} />
+            <img src="/public/hero-intro.png" alt="" style={{ width: "100%", height: "auto", display: "block" }} />
           </div>
 
           <div className="k404-doc-enter" style={{ background: C.card, border: `1px solid ${C.bdr}`, padding: "32px 28px", marginBottom: 36 }}>
@@ -621,7 +621,7 @@ export default function Kolli404() {
           <>
             {/* Evidence overview image */}
             <div className="k404-fade" style={{ marginBottom: 18, overflow: "hidden", border: `1px solid ${C.bdr}`, position: "relative" }}>
-              <img src="/hero-evidence.png" alt="" style={{ width: "100%", height: "auto", display: "block", opacity: 0.9 }} />
+              <img src="/public/hero-evidence.png" alt="" style={{ width: "100%", height: "auto", display: "block", opacity: 0.9 }} />
               <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, height: "30%", background: `linear-gradient(transparent, ${C.bg})` }} />
             </div>
 
@@ -782,7 +782,7 @@ export default function Kolli404() {
 
             {/* Closure image */}
             <div style={{ marginBottom: 28, overflow: "hidden", border: `1px solid ${C.bdr}`, position: "relative" }}>
-              <img src="/hero-closure.png" alt="" style={{ width: "100%", height: "auto", display: "block" }} />
+              <img src="/public/hero-closure.png" alt="" style={{ width: "100%", height: "auto", display: "block" }} />
             </div>
 
             <div style={{ marginBottom: 34 }}>
