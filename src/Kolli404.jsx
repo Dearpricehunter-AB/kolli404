@@ -307,8 +307,8 @@ export default function Kolli404() {
     return {
       cursor: "pointer",
       transition: "all 0.25s",
-      background: sel ? "rgba(200,164,93,0.12)" : found ? C.greenSoft : "transparent",
-      borderLeft: sel ? `3px solid ${C.gold}` : found ? `3px solid ${C.green}` : "3px solid transparent",
+      background: sel ? "rgba(200,164,93,0.15)" : found ? C.greenSoft : "rgba(200,164,93,0.04)",
+      borderLeft: sel ? `3px solid ${C.gold}` : found ? `3px solid ${C.green}` : `3px solid rgba(200,164,93,0.3)`,
       paddingLeft: 8,
       marginLeft: -11,
       borderRadius: 2,
@@ -328,10 +328,12 @@ export default function Kolli404() {
             borderBottom: `1px solid ${C.bdr}`, flexWrap: "wrap", gap: 4,
             ...fieldStyle(f.eid),
           }}>
-          <span style={{ fontFamily: C.mono, fontSize: 11, color: C.dim, letterSpacing: "0.05em", minWidth: 90 }}>{f.label}</span>
+          <span style={{ fontFamily: C.mono, fontSize: 11, color: f.eid && !sel && !found ? C.gold : C.dim, letterSpacing: "0.05em", minWidth: 90 }}>
+            {f.eid && !sel && !found && "◇ "}{f.label}
+          </span>
           <span style={{
-            fontFamily: C.mono, fontSize: 12, textAlign: "right", flex: 1, fontWeight: sel || found ? 600 : 400,
-            color: sel ? C.gold : found ? C.green : C.txt,
+            fontFamily: C.mono, fontSize: 12, textAlign: "right", flex: 1, fontWeight: sel || found ? 600 : f.eid ? 500 : 400,
+            color: sel ? C.gold : found ? C.green : f.eid ? C.txt : C.txt,
             transition: "color 0.3s",
           }}>{f.value}{sel && " ◆"}</span>
         </div>
@@ -343,20 +345,25 @@ export default function Kolli404() {
     return data.map((t, i) => {
       const sel = t.eid && isSelected(t.eid);
       const found = t.eid && isPartOfBreakthrough(t.eid);
+      const clickable = !!t.eid;
       return (
         <div key={i}
-          className={t.eid ? "k404-evidence-btn" : ""}
-          onClick={t.eid ? () => toggleEvidence(t.eid) : undefined}
+          className={clickable ? "k404-evidence-btn" : ""}
+          onClick={clickable ? () => toggleEvidence(t.eid) : undefined}
           style={{
-            display: "flex", alignItems: "flex-start", position: "relative", paddingBottom: 16, paddingLeft: 22,
-            ...fieldStyle(t.eid),
-            marginLeft: t.eid ? -11 : 0, paddingLeft: t.eid ? 30 : 22,
+            display: "flex", alignItems: "flex-start", position: "relative", paddingBottom: 16, paddingLeft: clickable ? 30 : 22,
+            marginLeft: clickable ? -11 : 0,
+            background: sel ? "rgba(200,164,93,0.15)" : found ? C.greenSoft : clickable ? "rgba(200,164,93,0.04)" : "transparent",
+            borderLeft: sel ? `3px solid ${C.gold}` : found ? `3px solid ${C.green}` : clickable ? `3px solid rgba(200,164,93,0.3)` : "none",
+            borderRadius: 2, transition: "all 0.25s",
           }}>
-          <div style={{ width: 6, height: 6, borderRadius: "50%", border: `1.5px solid ${sel ? C.gold : found ? C.green : C.muted}`, position: "absolute", left: t.eid ? 8 : 0, top: 5, background: sel ? C.gold : found ? C.green : "transparent", transition: "all 0.3s" }} />
-          {i < data.length - 1 && <div style={{ position: "absolute", left: t.eid ? 10.5 : 2.5, top: 14, width: 1, height: "calc(100% - 8px)", background: C.bdr }} />}
+          <div style={{ width: 6, height: 6, borderRadius: "50%", border: `1.5px solid ${sel ? C.gold : found ? C.green : clickable ? C.gold : C.muted}`, position: "absolute", left: clickable ? 8 : 0, top: 5, background: sel ? C.gold : found ? C.green : "transparent", transition: "all 0.3s" }} />
+          {i < data.length - 1 && <div style={{ position: "absolute", left: clickable ? 10.5 : 2.5, top: 14, width: 1, height: "calc(100% - 8px)", background: C.bdr }} />}
           <div style={{ display: "flex", flexDirection: "column", gap: 1 }}>
             <span style={{ fontFamily: C.mono, fontSize: 11, color: C.dim }}>{t.time}</span>
-            <span style={{ fontFamily: C.sans, fontSize: 13, color: sel ? C.gold : found ? C.green : C.txt, fontWeight: 500, transition: "color 0.3s" }}>{t.status}{sel && " ◆"}</span>
+            <span style={{ fontFamily: C.sans, fontSize: 13, color: sel ? C.gold : found ? C.green : C.txt, fontWeight: 500, transition: "color 0.3s" }}>
+              {clickable && !sel && !found && "◇ "}{t.status}{sel && " ◆"}
+            </span>
             {t.loc && <span style={{ fontFamily: C.sans, fontSize: 11, color: C.dim, fontStyle: "italic" }}>{t.loc}</span>}
           </div>
         </div>
@@ -563,7 +570,11 @@ export default function Kolli404() {
             {/* Active document */}
             {ac && (
               <div className="k404-doc-enter" key={ac.id} style={{ marginBottom: 20 }}>
-                <div style={{ fontFamily: C.mono, fontSize: 10, color: C.gold, marginBottom: 8, letterSpacing: "0.1em", opacity: 0.8 }}>KLICKA PÅ MARKERADE FÄLT FÖR ATT VÄLJA BEVIS</div>
+                <div style={{ background: C.goldSoft, border: `1px solid ${C.goldBorder}`, padding: "10px 14px", marginBottom: 10, borderRadius: 2 }}>
+                  <p style={{ fontFamily: C.sans, fontSize: 12, color: C.gold, lineHeight: 1.6, marginBottom: 2 }}>
+                    <strong>◇</strong> markerar bevisdata. Klicka på två intressanta fält i olika underlag — tryck sedan <strong>KOPPLA BEVIS</strong> för att testa sambandet.
+                  </p>
+                </div>
                 {renderClue(ac)}
               </div>
             )}
