@@ -490,7 +490,12 @@ export default function Kolli404() {
         <div style={{ maxWidth: 580, margin: "0 auto", padding: "52px 28px 60px", position: "relative", zIndex: 2 }}>
           <div className="k404-fade" style={{ fontFamily: C.mono, fontSize: 10, letterSpacing: "0.2em", color: C.gold, marginBottom: 24 }}>LOGISTIKGÅTA</div>
           <h1 className="k404-card-enter" style={{ fontFamily: C.mono, fontSize: "clamp(28px,8vw,42px)", fontWeight: 600, color: C.txt, letterSpacing: "0.08em", margin: "0 0 6px", lineHeight: 1.15 }}>KOLLI 404</h1>
-          <p className="k404-card-enter" style={{ fontFamily: C.mono, fontSize: 11, color: C.dim, letterSpacing: "0.12em", marginBottom: 40 }}>FRIGJORD DEKLARATION, SAKNAT MATERIAL</p>
+          <p className="k404-card-enter" style={{ fontFamily: C.mono, fontSize: 11, color: C.dim, letterSpacing: "0.12em", marginBottom: 28 }}>FRIGJORD DEKLARATION, SAKNAT MATERIAL</p>
+
+          {/* Hero image */}
+          <div className="k404-doc-enter" style={{ marginBottom: 28, position: "relative", overflow: "hidden", border: `1px solid ${C.bdr}` }}>
+            <img src="/hero-intro.png" alt="" style={{ width: "100%", height: "auto", display: "block" }} />
+          </div>
 
           <div className="k404-doc-enter" style={{ background: C.card, border: `1px solid ${C.bdr}`, padding: "32px 28px", marginBottom: 36 }}>
             <div style={{ textAlign: "right", marginBottom: 18 }}>
@@ -514,12 +519,59 @@ export default function Kolli404() {
             </p>
 
             <div style={{ fontFamily: C.sans, fontSize: 14, color: C.muted, lineHeight: 1.9 }}>
-              <p style={{ marginBottom: 8 }}>En akut reservdel från Storbritannien skulle vara på plats i produktionen i Värnamo före 14:00.</p>
-              <p style={{ marginBottom: 8 }}>Transportören visar levererat till 3PL.</p>
-              <p style={{ marginBottom: 8 }}>Importdeklarationen har status <span style={{ fontFamily: C.mono, color: C.green, fontSize: 12 }}>Frigjord</span>.</p>
-              <p style={{ marginBottom: 8 }}>3PL:s WMS visar mottaget gods.</p>
-              <p style={{ marginBottom: 0, marginTop: 16 }}>Ändå finns materialet inte tillgängligt för produktionen.</p>
+              <p style={{ marginBottom: 16 }}>En akut reservdel från Storbritannien skulle vara på plats i produktionen i Värnamo före 14:00.</p>
             </div>
+
+            {/* ── Visual flow diagram ── */}
+            <div className="k404-doc-enter" style={{ margin: "20px 0 24px", padding: "20px 16px", background: C.bg, border: `1px solid ${C.bdr}`, borderRadius: 2 }}>
+              <div style={{ fontFamily: C.mono, fontSize: 9, letterSpacing: "0.15em", color: C.dim, marginBottom: 16 }}>LEVERANSKEDJA</div>
+              
+              {/* Flow nodes */}
+              <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 20, flexWrap: "wrap", gap: 4 }}>
+                {[
+                  { label: "AVSÄNDARE", sub: "Manchester, UK", status: "ok" },
+                  { label: "IMPORT", sub: "Terminal SE", status: "ok" },
+                  { label: "3PL", sub: "Värnamo", status: "warn" },
+                  { label: "PRODUKTION", sub: "NordAxel", status: "fail" },
+                ].map((node, i) => (
+                  <div key={i} style={{ display: "flex", alignItems: "center", flex: 1, minWidth: 0 }}>
+                    <div style={{ textAlign: "center", flex: 1 }}>
+                      <div style={{
+                        width: 10, height: 10, borderRadius: "50%", margin: "0 auto 6px",
+                        background: node.status === "ok" ? C.green : node.status === "warn" ? "#B8963C" : C.red,
+                        boxShadow: node.status === "fail" ? `0 0 10px ${C.red}66` : node.status === "ok" ? `0 0 8px ${C.green}44` : "none",
+                        animation: node.status === "fail" ? "k404glow 2s ease-in-out infinite" : "none",
+                      }} />
+                      <div style={{ fontFamily: C.mono, fontSize: 9, color: node.status === "fail" ? C.red : C.muted, letterSpacing: "0.08em", marginBottom: 2 }}>{node.label}</div>
+                      <div style={{ fontFamily: C.sans, fontSize: 10, color: C.dim }}>{node.sub}</div>
+                    </div>
+                    {i < 3 && (
+                      <div style={{ width: 24, height: 1, background: i < 2 ? C.green : `${C.red}88`, flexShrink: 0, margin: "0 2px", marginBottom: 16 }} />
+                    )}
+                  </div>
+                ))}
+              </div>
+
+              {/* Status summary */}
+              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 6 }}>
+                {[
+                  { sys: "Transportör", status: "Levererat till 3PL", color: C.green },
+                  { sys: "Tullombud", status: "Deklaration Frigjord", color: C.green },
+                  { sys: "3PL WMS", status: "Mottaget / ej releasat", color: "#B8963C" },
+                  { sys: "Produktion", status: "Material saknas", color: C.red },
+                ].map((s, i) => (
+                  <div key={i} style={{ display: "flex", alignItems: "center", gap: 8, padding: "6px 10px", background: i === 3 ? C.redSoft : "transparent", border: `1px solid ${i === 3 ? `${C.red}33` : C.bdr}` }}>
+                    <div style={{ width: 6, height: 6, borderRadius: "50%", background: s.color, flexShrink: 0 }} />
+                    <div>
+                      <div style={{ fontFamily: C.mono, fontSize: 9, color: C.dim, letterSpacing: "0.05em" }}>{s.sys}</div>
+                      <div style={{ fontFamily: C.sans, fontSize: 11, color: s.color === C.red ? C.red : C.muted }}>{s.status}</div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <p style={{ fontFamily: C.sans, fontSize: 14, color: C.muted, lineHeight: 1.9, marginBottom: 0 }}>Ändå finns materialet inte tillgängligt för produktionen.</p>
 
             <p style={{ fontFamily: C.serif, fontStyle: "italic", color: C.gold, marginTop: 24, fontSize: 15 }}>Alla system visar något som ser korrekt ut. Ingen status visar hela kedjan.</p>
 
@@ -566,15 +618,39 @@ export default function Kolli404() {
 
         {!showSolution && (
           <>
+            {/* Evidence overview image */}
+            <div className="k404-fade" style={{ marginBottom: 18, overflow: "hidden", border: `1px solid ${C.bdr}`, position: "relative" }}>
+              <img src="/hero-evidence.png" alt="" style={{ width: "100%", height: "auto", display: "block", opacity: 0.9 }} />
+              <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, height: "30%", background: `linear-gradient(transparent, ${C.bg})` }} />
+            </div>
+
             {/* Case context reminder */}
             <div className="k404-fade" style={{ background: C.card, border: `1px solid ${C.bdr}`, padding: "16px 18px", marginBottom: 20 }}>
               <div style={{ fontFamily: C.mono, fontSize: 10, letterSpacing: "0.15em", color: C.gold, marginBottom: 10 }}>ÄRENDET</div>
-              <p style={{ fontFamily: C.serif, fontSize: 14, fontStyle: "italic", color: C.txt, lineHeight: 1.6, marginBottom: 10, borderLeft: `2px solid ${C.goldBorder}`, paddingLeft: 14 }}>
+              <p style={{ fontFamily: C.serif, fontSize: 14, fontStyle: "italic", color: C.txt, lineHeight: 1.6, marginBottom: 12, borderLeft: `2px solid ${C.goldBorder}`, paddingLeft: 14 }}>
                 "Ni säger att materialet är levererat. Men vår lina står fortfarande utan reservdelen."
               </p>
-              <p style={{ fontFamily: C.sans, fontSize: 12, color: C.muted, lineHeight: 1.7 }}>
-                Akut reservdel, Northbridge Components (UK) → NordAxel Manufacturing (Värnamo). Produktionskritiskt före 14:00. Transportör, tullombud och 3PL visar alla grön status — men materialet är inte tillgängligt.
-              </p>
+              {/* Compact inline flow */}
+              <div style={{ display: "flex", alignItems: "center", gap: 0, flexWrap: "wrap", marginTop: 6 }}>
+                {[
+                  { label: "Transportör", ok: true },
+                  { label: "Tullombud", ok: true },
+                  { label: "3PL WMS", ok: null },
+                  { label: "Produktion", ok: false },
+                ].map((n, i) => (
+                  <div key={i} style={{ display: "flex", alignItems: "center" }}>
+                    <div style={{ display: "flex", alignItems: "center", gap: 5, padding: "4px 8px", background: n.ok === false ? C.redSoft : "transparent", borderRadius: 2 }}>
+                      <div style={{
+                        width: 6, height: 6, borderRadius: "50%",
+                        background: n.ok === true ? C.green : n.ok === null ? "#B8963C" : C.red,
+                        animation: n.ok === false ? "k404glow 2s ease-in-out infinite" : "none",
+                      }} />
+                      <span style={{ fontFamily: C.mono, fontSize: 9, color: n.ok === false ? C.red : C.muted, letterSpacing: "0.04em" }}>{n.label}</span>
+                    </div>
+                    {i < 3 && <span style={{ color: C.dim, fontSize: 10, margin: "0 2px" }}>→</span>}
+                  </div>
+                ))}
+              </div>
             </div>
 
             <p className="k404-fade" style={{ fontFamily: C.mono, fontSize: 10, letterSpacing: "0.15em", color: C.dim, marginBottom: 14, textTransform: "uppercase" }}>Granska bevis</p>
@@ -679,6 +755,11 @@ export default function Kolli404() {
                   background: "transparent", border: `1px solid ${copied ? C.green : C.goldBorder}`, padding: "8px 18px", cursor: "pointer", transition: "all 0.2s",
                 }}>{copied ? "KOPIERAT" : "KOPIERA RESULTAT"}</button>
               </div>
+            </div>
+
+            {/* Closure image */}
+            <div style={{ marginBottom: 28, overflow: "hidden", border: `1px solid ${C.bdr}`, position: "relative" }}>
+              <img src="/hero-closure.png" alt="" style={{ width: "100%", height: "auto", display: "block" }} />
             </div>
 
             <div style={{ marginBottom: 34 }}>
